@@ -25,62 +25,79 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  final correctMark = Icon(Icons.check, color: Colors.green);
+  final wrongMark = Icon(Icons.close, color: Colors.red);
+  List<Icon> scoreKeeper = [];
+
   @override
   Widget build(BuildContext context) {
+    var trueButton = Padding(
+      padding: EdgeInsets.all(16.0),
+      child: TextButton(
+        style: TextButton.styleFrom(
+            padding: EdgeInsets.only(top: 20.00, bottom: 20.00),
+            backgroundColor: Colors.green),
+        child: Text(
+          'True',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+          ),
+        ),
+        onPressed: () {
+          setState(() {
+            scoreKeeper.add(correctMark);
+          });
+        },
+      ),
+    );
+
+    var wrongButton = Padding(
+      padding: EdgeInsets.all(16.0),
+      child: TextButton(
+        style: TextButton.styleFrom(
+            padding: EdgeInsets.only(top: 20.00, bottom: 20.00),
+            backgroundColor: Colors.red),
+        child: Text(
+          'False',
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
+          ),
+        ),
+        onPressed: () {
+          setState(() {
+            scoreKeeper.add(wrongMark);
+          });
+        },
+      ),
+    );
+
+    var questions = Expanded(
+      flex: 5,
+      child: Center(
+        child: Text(
+          'This is where the question text will go.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 25.0,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Expanded(
-          flex: 5,
-          child: Center(
-            child: Text(
-              'This is where the question text will go.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 25.0,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
+        questions,
+        trueButton,
+        wrongButton,
         Padding(
-          padding: EdgeInsets.all(16.0),
-          child: TextButton(
-            style: TextButton.styleFrom(
-                padding: EdgeInsets.only(top: 20.00, bottom: 20.00),
-                backgroundColor: Colors.green),
-            child: Text(
-              'True',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-              ),
-            ),
-            onPressed: () {
-              //The user picked true.
-            },
-          ),
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Row(children: scoreKeeper),
         ),
-        Padding(
-          padding: EdgeInsets.all(16.0),
-          child: TextButton(
-            style: TextButton.styleFrom(
-                padding: EdgeInsets.only(top: 20.00, bottom: 20.00),
-                backgroundColor: Colors.red),
-            child: Text(
-              'False',
-              style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.white,
-              ),
-            ),
-            onPressed: () {
-              //The user picked false.
-            },
-          ),
-        ),
-        SizedBox(height: 32.0),
         //TODO: Add a Row here as your score keeper
       ],
     );
