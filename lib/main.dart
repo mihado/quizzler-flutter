@@ -80,6 +80,7 @@ class _QuizPageState extends State<QuizPage> {
             },
           ),
         ),
+        SizedBox(height: 32.0),
         //TODO: Add a Row here as your score keeper
       ],
     );
