@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'quiz_brain.dart';
 
+QuizBrain quizBrain = QuizBrain();
 void main() => runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -30,15 +31,7 @@ class _QuizPageState extends State<QuizPage> {
   final wrongMark = Icon(Icons.close, color: Colors.red);
   List<Icon> scoreKeeper = [];
 
-  List<Question> questionBank = [
-    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
-    Question(
-        q: 'Approximately one quarter of human bones are in the feet.',
-        a: true),
-    Question(q: 'A slug\'s blood is green.', a: true),
-  ];
-
-  var currentQuestion = 0;
+  var questionNumber = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -56,15 +49,16 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         onPressed: () {
-          if (questionBank[currentQuestion].questionAnswer == true) {
-            scoreKeeper.add(correctMark);
-          } else {
-            scoreKeeper.add(wrongMark);
-          }
+          // TODO: update
+          // if (QuizBrain.getQuestion(currentQuestion).questionAnswer == true) {
+          //   scoreKeeper.add(correctMark);
+          // } else {
+          //   scoreKeeper.add(wrongMark);
+          // }
 
           setState(() {
-            if (currentQuestion < questionBank.length - 1) {
-              currentQuestion++;
+            if (quizBrain.hasNextQuestion(questionNumber)) {
+              questionNumber++;
             }
           });
         },
@@ -85,15 +79,16 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         onPressed: () {
-          if (questionBank[currentQuestion].questionAnswer == false) {
-            scoreKeeper.add(correctMark);
-          } else {
-            scoreKeeper.add(wrongMark);
-          }
+          // TODO: update
+          // if (questionBank[currentQuestion].questionAnswer == false) {
+          //   scoreKeeper.add(correctMark);
+          // } else {
+          //   scoreKeeper.add(wrongMark);
+          // }
 
           setState(() {
-            if (currentQuestion < questionBank.length - 1) {
-              currentQuestion++;
+            if (quizBrain.hasNextQuestion(questionNumber)) {
+              questionNumber++;
             }
           });
         },
@@ -104,7 +99,7 @@ class _QuizPageState extends State<QuizPage> {
       flex: 5,
       child: Center(
         child: Text(
-          questionBank[currentQuestion].questionText,
+          quizBrain.getQuestion(questionNumber).questionText,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 25.0,
